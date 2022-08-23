@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="header">
+  <h1>Create Project</h1>
+</section>
+
+<section id="form">
+  <form action="{{ url_for('add_project') }}" method="POST">
+    {% include 'project-form-inputs.html' %}
+    <div>
+      <button type="reset">Reset Form</button>
+      <button type="submit">Create Project</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

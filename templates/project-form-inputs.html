@@ -1,0 +1,15 @@
+<label for="title">Project Title</label>
+<input type="text" name="title" id="title" placeholder="Project Name" required value="{{ project.title }}">
+
+<label for="date_created">Completion Date</label>
+<input type="date" name="date_created" id="date_created" required value="{% if project.date_created %}{{ project.date_created.strftime('%Y-%m-%d') }}{% endif %}">
+
+<label for="description">Description</label>
+<textarea name="description" id="description" cols="30" rows="20" placeholder="Description" required>{{ project.description }}</textarea>
+
+<label for="skills_practiced" id="skills-label">Skills</label>
+<p>Separate each skill by a comma</p>
+<textarea name="skills_practiced" id="skills_practiced" cols="30" rows="10" placeholder="Skill, Skill" required>{% if project.skills_practiced %}{{ ", ".join(project.skills_practiced.split('|')) }}{% endif %}</textarea>
+
+<label for="github_link">GitHub Link</label>
+<input type="url" name="github_link" id="github_link" placeholder="Link to the repo" required value="{{ project.github_link }}">
