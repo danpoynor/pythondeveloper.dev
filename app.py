@@ -24,24 +24,24 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/projects/new', methods=['GET', 'POST'])
-def add_project():
-    """Add a new project."""
-    # Create an empty default `project` value since project-form.html requires
-    # it to be passed in to the template when editing an existing project.
-    empty_project = None
-    if request.form:
-        new_project = Project(title=request.form['title'],
-                              date_created=datetime.strptime(
-                                  request.form['date_created'], '%Y-%m-%d'),
-                              description=request.form['description'],
-                              skills_practiced="|".join(
-                                  [str(i).strip() for i in request.form['skills_practiced'].split(',') if i]),
-                              github_link=request.form['github_link'])
-        db.session.add(new_project)
-        db.session.commit()
-        return redirect(url_for('index'))
-    return render_template('project-create.html', project=empty_project)
+# @app.route('/projects/new', methods=['GET', 'POST'])
+# def add_project():
+#     """Add a new project."""
+#     # Create an empty default `project` value since project-form.html requires
+#     # it to be passed in to the template when editing an existing project.
+#     empty_project = None
+#     if request.form:
+#         new_project = Project(title=request.form['title'],
+#                               date_created=datetime.strptime(
+#                                   request.form['date_created'], '%Y-%m-%d'),
+#                               description=request.form['description'],
+#                               skills_practiced="|".join(
+#                                   [str(i).strip() for i in request.form['skills_practiced'].split(',') if i]),
+#                               github_link=request.form['github_link'])
+#         db.session.add(new_project)
+#         db.session.commit()
+#         return redirect(url_for('index'))
+#     return render_template('project-create.html', project=empty_project)
 
 
 @app.route('/projects/<int:project_id>')
@@ -51,34 +51,34 @@ def project(project_id: int):
     return render_template("project.html", project=selected_project)
 
 
-@app.route('/projects/<int:project_id>/edit', methods=['GET', 'POST'])
-def edit_project(project_id: int):
-    """Edit a project."""
-    project_to_edit = Project.query.get_or_404(project_id)
-    if request.form:
-        print(request.form)
-        project_to_edit.title = request.form["title"]
-        project_to_edit.description = request.form["description"]
-        project_to_edit.date_created = datetime.strptime(
-            request.form['date_created'], '%Y-%m-%d')
-        # Split the skills input by comma, strip whitespace from beginning and
-        # end of each skill, and join them back together with a pipe character
-        # separating each skill to be stored in the database.
-        project_to_edit.skills_practiced = "|".join(
-            map(str.strip, request.form["skills_practiced"].split(',')))
-        project_to_edit.github_link = request.form["github_link"]
-        db.session.commit()
-        return redirect(url_for('index'))
-    return render_template('project-edit.html', project_id=project_id, project=project_to_edit)
+# @app.route('/projects/<int:project_id>/edit', methods=['GET', 'POST'])
+# def edit_project(project_id: int):
+#     """Edit a project."""
+#     project_to_edit = Project.query.get_or_404(project_id)
+#     if request.form:
+#         print(request.form)
+#         project_to_edit.title = request.form["title"]
+#         project_to_edit.description = request.form["description"]
+#         project_to_edit.date_created = datetime.strptime(
+#             request.form['date_created'], '%Y-%m-%d')
+#         # Split the skills input by comma, strip whitespace from beginning and
+#         # end of each skill, and join them back together with a pipe character
+#         # separating each skill to be stored in the database.
+#         project_to_edit.skills_practiced = "|".join(
+#             map(str.strip, request.form["skills_practiced"].split(',')))
+#         project_to_edit.github_link = request.form["github_link"]
+#         db.session.commit()
+#         return redirect(url_for('index'))
+#     return render_template('project-edit.html', project_id=project_id, project=project_to_edit)
 
 
-@app.route('/projects/<int:project_id>/delete', methods=['GET', 'POST'])
-def delete_project(project_id: int):
-    """Delete a project."""
-    selected_project = Project.query.get_or_404(project_id)
-    db.session.delete(selected_project)
-    db.session.commit()
-    return redirect(url_for('index'))
+# @app.route('/projects/<int:project_id>/delete', methods=['GET', 'POST'])
+# def delete_project(project_id: int):
+#     """Delete a project."""
+#     selected_project = Project.query.get_or_404(project_id)
+#     db.session.delete(selected_project)
+#     db.session.commit()
+#     return redirect(url_for('index'))
 
 
 @app.route('/about')
