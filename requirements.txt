@@ -19,5 +19,5 @@ SQLAlchemy==1.4.39
 toml==0.10.2
 tomli==2.0.1
 tomlkit==0.11.2
-Werkzeug==2.2.1
+Werkzeug==2.2.3
 wrapt==1.14.1
